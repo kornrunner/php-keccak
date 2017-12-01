@@ -855,16 +855,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "5.0.2",
+            "version": "5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "b09519fb0786d369c0ae6b00c9caf25f7292b393"
+                "reference": "a58b8fc03ca12d8bf6122ea942bc72c99c7cda4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/b09519fb0786d369c0ae6b00c9caf25f7292b393",
-                "reference": "b09519fb0786d369c0ae6b00c9caf25f7292b393",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/a58b8fc03ca12d8bf6122ea942bc72c99c7cda4a",
+                "reference": "a58b8fc03ca12d8bf6122ea942bc72c99c7cda4a",
                 "shasum": ""
             },
             "require": {
@@ -910,7 +910,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2017-12-01T09:50:16+00:00"
+            "time": "2017-12-01T16:12:08+00:00"
         },
         {
             "name": "psr/log",
