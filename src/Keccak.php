@@ -2,15 +2,20 @@
 
 namespace kornrunner;
 
+use Exception;
+use function mb_strlen;
+use function mb_substr;
+
 final class Keccak
 {
     private const KECCAK_ROUNDS = 24;
     private const LFSR = 0x01;
+    private const ENCODING = '8bit';
     private static $keccakf_rotc = [1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 2, 14, 27, 41, 56, 8, 25, 43, 62, 18, 39, 61, 20, 44];
     private static $keccakf_piln = [10, 7, 11, 17, 18, 3, 5, 16, 8, 21, 24, 4, 15, 23, 19, 13, 12,2, 20, 14, 22, 9, 6, 1];
+    private static $x64 = (PHP_INT_SIZE === 8);
 
-    private static function keccakf64(&$st, $rounds)
-    {
+    private static function keccakf64(&$st, $rounds): void {
         $keccakf_rndc = [
             [0x00000000, 0x00000001], [0x00000000, 0x00008082], [0x80000000, 0x0000808a], [0x80000000, 0x80008000],
             [0x00000000, 0x0000808b], [0x00000000, 0x80000001], [0x80000000, 0x80008081], [0x80000000, 0x00008009],
@@ -90,11 +95,10 @@ final class Keccak
         }
     }
 
-    private static function keccak64($in_raw, $capacity, $outputlength, $suffix, $raw_output)
-    {
+    private static function keccak64($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output): string {
         $capacity /= 8;
 
-        $inlen = self::ourStrlen($in_raw);
+        $inlen = mb_strlen($in_raw, self::ENCODING);
 
         $rsiz = 200 - 2 * $capacity;
         $rsizw = $rsiz / 8;
@@ -106,7 +110,7 @@ final class Keccak
 
         for ($in_t = 0; $inlen >= $rsiz; $inlen -= $rsiz, $in_t += $rsiz) {
             for ($i = 0; $i < $rsizw; $i++) {
-                $t = unpack('V*', self::ourSubstr($in_raw, $i * 8 + $in_t, 8));
+                $t = unpack('V*', mb_substr($in_raw, $i * 8 + $in_t, 8, self::ENCODING));
 
                 $st[$i] = [
                     $st[$i][0] ^ $t[2],
@@ -117,14 +121,14 @@ final class Keccak
             self::keccakf64($st, self::KECCAK_ROUNDS);
         }
 
-        $temp = self::ourSubstr($in_raw, $in_t, $inlen);
+        $temp = mb_substr($in_raw, $in_t, $inlen, self::ENCODING);
         $temp = str_pad($temp, $rsiz, "\x0", STR_PAD_RIGHT);
 
         $temp[$inlen] = chr($suffix);
         $temp[$rsiz - 1] = chr(ord($temp[$rsiz - 1]) | 0x80);
 
         for ($i = 0; $i < $rsizw; $i++) {
-            $t = unpack('V*', self::ourSubstr($temp, $i * 8, 8));
+            $t = unpack('V*', mb_substr($temp, $i * 8, 8, self::ENCODING));
 
             $st[$i] = [
                 $st[$i][0] ^ $t[2],
@@ -138,13 +142,12 @@ final class Keccak
         for ($i = 0; $i < 25; $i++) {
             $out .= $t = pack('V*', $st[$i][1], $st[$i][0]);
         }
-        $r = self::ourSubstr($out, 0, $outputlength / 8);
+        $r = mb_substr($out, 0, $outputlength / 8, self::ENCODING);
 
         return $raw_output ? $r : bin2hex($r);
     }
 
-    private static function keccakf32(&$st, $rounds)
-    {
+    private static function keccakf32(&$st, $rounds): void {
         $keccakf_rndc = [
             [0x0000, 0x0000, 0x0000, 0x0001], [0x0000, 0x0000, 0x0000, 0x8082], [0x8000, 0x0000, 0x0000, 0x0808a], [0x8000, 0x0000, 0x8000, 0x8000],
             [0x0000, 0x0000, 0x0000, 0x808b], [0x0000, 0x0000, 0x8000, 0x0001], [0x8000, 0x0000, 0x8000, 0x08081], [0x8000, 0x0000, 0x0000, 0x8009],
@@ -230,11 +233,10 @@ final class Keccak
         }
     }
 
-    private static function keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output)
-    {
+    private static function keccak32($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output): string {
         $capacity /= 8;
 
-        $inlen = self::ourStrlen($in_raw);
+        $inlen = mb_strlen($in_raw, self::ENCODING);
 
         $rsiz = 200 - 2 * $capacity;
         $rsizw = $rsiz / 8;
@@ -246,7 +248,7 @@ final class Keccak
 
         for ($in_t = 0; $inlen >= $rsiz; $inlen -= $rsiz, $in_t += $rsiz) {
             for ($i = 0; $i < $rsizw; $i++) {
-                $t = unpack('v*', self::ourSubstr($in_raw, $i * 8 + $in_t, 8));
+                $t = unpack('v*', mb_substr($in_raw, $i * 8 + $in_t, 8, self::ENCODING));
 
                 $st[$i] = [
                     $st[$i][0] ^ $t[4],
@@ -259,14 +261,14 @@ final class Keccak
             self::keccakf32($st, self::KECCAK_ROUNDS);
         }
 
-        $temp = self::ourSubstr($in_raw, $in_t, $inlen);
+        $temp = mb_substr($in_raw, $in_t, $inlen, self::ENCODING);
         $temp = str_pad($temp, $rsiz, "\x0", STR_PAD_RIGHT);
 
         $temp[$inlen] = chr($suffix);
         $temp[$rsiz - 1] = chr((int) $temp[$rsiz - 1] | 0x80);
 
         for ($i = 0; $i < $rsizw; $i++) {
-            $t = unpack('v*', self::ourSubstr($temp, $i * 8, 8));
+            $t = unpack('v*', mb_substr($temp, $i * 8, 8, self::ENCODING));
 
             $st[$i] = [
                 $st[$i][0] ^ $t[4],
@@ -282,118 +284,31 @@ final class Keccak
         for ($i = 0; $i < 25; $i++) {
             $out .= $t = pack('v*', $st[$i][3],$st[$i][2], $st[$i][1], $st[$i][0]);
         }
-        $r = self::ourSubstr($out, 0, $outputlength / 8);
+        $r = mb_substr($out, 0, $outputlength / 8, self::ENCODING);
 
         return $raw_output ? $r: bin2hex($r);
     }
 
-    // 0 = not run, 1 = 64 bit passed, 2 = 32 bit passed, 3 = failed
-    private static $test_state = 0;
-    private static function selfTest()
-    {
-        if(self::$test_state === 1 || self::$test_state === 2){
-            return;
-        }
-
-        if(self::$test_state === 3){
-            throw new \Exception('Keccak previous self test failed!');
-        }
-
-        $in = '';
-        $md = 'f71837502ba8e10837bdd8d365adb85591895602fc552b48b7390abd';
-        if(self::keccak64($in, 224, 224, self::LFSR, false) === $md){
-            self::$test_state = 1;
-            return;
-        }
-
-        if(self::keccak32($in, 224, 224, self::LFSR, false) === $md){
-            self::$test_state = 2;
-            return;
-        }
-
-        self::$test_state = 3;
-        throw new \Exception('Keccak self test failed!');
+    private static function keccak($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output): string {
+        return self::$x64
+            ? self::keccak64($in_raw, $capacity, $outputlength, $suffix, $raw_output)
+            : self::keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output);
     }
 
-    private static function keccak($in_raw, $capacity, $outputlength, $suffix, $raw_output)
-    {
-        self::selfTest();
-
-        if(self::$test_state === 1) {
-            return self::keccak64($in_raw, $capacity, $outputlength, $suffix, $raw_output);
-        }
-
-        return self::keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output);
-    }
-
-    public static function hash($in, $mdlen, $raw_output = false)
-    {
-        if( ! in_array($mdlen, [224, 256, 384, 512], true)) {
-            throw new \Exception('Unsupported Keccak Hash output size.');
+    public static function hash($in, int $mdlen, bool $raw_output = false): string {
+        if (!in_array($mdlen, [224, 256, 384, 512], true)) {
+            throw new Exception('Unsupported Keccak Hash output size.');
         }
 
         return self::keccak($in, $mdlen, $mdlen, self::LFSR, $raw_output);
     }
 
-    public static function shake($in, $security_level, $outlen, $raw_output = false)
-    {
-        if( ! in_array($security_level, [128, 256], true)) {
-            throw new \Exception('Unsupported Keccak Shake security level.');
+    public static function shake($in, int $security_level, int $outlen, bool $raw_output = false): string {
+        if (!in_array($security_level, [128, 256], true)) {
+            throw new Exception('Unsupported Keccak Shake security level.');
         }
 
         return self::keccak($in, $security_level, $outlen, 0x1f, $raw_output);
     }
 
-    /**
-     *  Multi-byte-safe string functions borrowed from https://github.com/sarciszewski/php-future
-     */
-
-    /**
-     * Multi-byte-safe string length calculation
-     *
-     * @param string $str
-     * @return int
-     */
-    private static function ourStrlen($str)
-    {
-        // Premature optimization: cache the function_exists() result
-        static $exists = null;
-        if ($exists === null) {
-            $exists = \function_exists('\\mb_strlen');
-        }
-        // If it exists, we need to make sure we're using 8bit mode
-        if ($exists) {
-            $length =  \mb_strlen($str, '8bit');
-            if ($length === false) {
-                throw new \Exception('mb_strlen() failed.');
-            }
-            return $length;
-        }
-
-        return \strlen($str);
-    }
-
-    /**
-     * Multi-byte-safe substring calculation
-     *
-     * @param string $str
-     * @param int $start
-     * @param int $length (optional)
-     * @return string
-     */
-    private static function ourSubstr($str, $start = 0, $length = null)
-    {
-        // Premature optimization: cache the function_exists() result
-        static $exists = null;
-        if ($exists === null) {
-            $exists = \function_exists('\\mb_substr');
-        }
-        // If it exists, we need to make sure we're using 8bit mode
-        if ($exists) {
-            return \mb_substr($str, $start, $length, '8bit');
-        } elseif ($length !== null) {
-            return \substr($str, $start, $length);
-        }
-        return \substr($str, $start);
-    }
 }
