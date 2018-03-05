@@ -2,7 +2,7 @@
     "name": "kornrunner/keccak",
     "description": "Pure PHP implementation of Keccak",
     "keywords": ["keccak", "sha-3"],
-    "license": "GPL-3.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Boris Momcilovic",
