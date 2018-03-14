@@ -293,7 +293,7 @@ final class Keccak
             : self::keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output);
     }
 
-    public static function hash($in, int $mdlen, bool $raw_output = false) {
+    public static function hash($in, int $mdlen, $raw_output = false) {
         if (!in_array($mdlen, [224, 256, 384, 512], true)) {
             throw new Exception('Unsupported Keccak Hash output size.');
         }
@@ -301,7 +301,7 @@ final class Keccak
         return self::keccak($in, $mdlen, $mdlen, self::LFSR, $raw_output);
     }
 
-    public static function shake($in, int $security_level, int $outlen, bool $raw_output = false) {
+    public static function shake($in, int $security_level, int $outlen, $raw_output = false) {
         if (!in_array($security_level, [128, 256], true)) {
             throw new Exception('Unsupported Keccak Shake security level.');
         }
