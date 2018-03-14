@@ -93,7 +93,7 @@ final class Keccak
         }
     }
 
-    private static function keccak64($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output) {
+    private static function keccak64($in_raw, $capacity, $outputlength, $suffix, $raw_output) {
         $capacity /= 8;
 
         $inlen = mb_strlen($in_raw, self::ENCODING);
@@ -231,7 +231,7 @@ final class Keccak
         }
     }
 
-    private static function keccak32($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output) {
+    private static function keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output) {
         $capacity /= 8;
 
         $inlen = mb_strlen($in_raw, self::ENCODING);
@@ -263,7 +263,7 @@ final class Keccak
         $temp = str_pad($temp, $rsiz, "\x0", STR_PAD_RIGHT);
 
         $temp[$inlen] = chr($suffix);
-        $temp[$rsiz - 1] = chr((int) $temp[$rsiz - 1] | 0x80);
+        $temp[$rsiz - 1] = chr(intval($temp[$rsiz - 1]) | 0x80);
 
         for ($i = 0; $i < $rsizw; $i++) {
             $t = unpack('v*', mb_substr($temp, $i * 8, 8, self::ENCODING));
@@ -287,13 +287,13 @@ final class Keccak
         return $raw_output ? $r: bin2hex($r);
     }
 
-    private static function keccak($in_raw, int $capacity, int $outputlength, $suffix, bool $raw_output) {
+    private static function keccak($in_raw, $capacity, $outputlength, $suffix, $raw_output) {
         return self::$x64
             ? self::keccak64($in_raw, $capacity, $outputlength, $suffix, $raw_output)
             : self::keccak32($in_raw, $capacity, $outputlength, $suffix, $raw_output);
     }
 
-    public static function hash($in, int $mdlen, $raw_output = false) {
+    public static function hash($in, $mdlen, $raw_output = false) {
         if (!in_array($mdlen, [224, 256, 384, 512], true)) {
             throw new Exception('Unsupported Keccak Hash output size.');
         }
@@ -301,7 +301,7 @@ final class Keccak
         return self::keccak($in, $mdlen, $mdlen, self::LFSR, $raw_output);
     }
 
-    public static function shake($in, int $security_level, int $outlen, $raw_output = false) {
+    public static function shake($in, $security_level, $outlen, $raw_output = false) {
         if (!in_array($security_level, [128, 256], true)) {
             throw new Exception('Unsupported Keccak Shake security level.');
         }
