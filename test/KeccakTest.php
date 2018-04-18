@@ -6,7 +6,6 @@ namespace kornrunner;
  *@see https://gist.github.com/Souptacular/f50128d63b5188490fa2
  */
 
-use kornrunner\Keccak;
 use PHPUnit\Framework\TestCase;
 
 class KeccakTest extends TestCase
