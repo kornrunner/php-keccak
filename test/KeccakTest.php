@@ -1,5 +1,7 @@
 <?php
 
+namespace kornrunner;
+
 /**
  *@see https://gist.github.com/Souptacular/f50128d63b5188490fa2
  */
@@ -15,7 +17,7 @@ class KeccakTest extends TestCase
 
     public static function setUpBeforeClass() {
         parent::setUpBeforeClass();
-        $class = new ReflectionClass(Keccak::class);
+        $class = new \ReflectionClass(Keccak::class);
         self::$x64 = $class->getProperty('x64');
         self::$x64->setAccessible(true);
     }
@@ -125,14 +127,14 @@ class KeccakTest extends TestCase
 
     public function testUnsupportedHashOutputSize()
     {
-        $this->expectException('Exception');
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Unsupported Keccak Hash output size.');
         Keccak::hash('', 225);
     }
 
     public function testUnsupportedShakeSecurityLevel()
     {
-        $this->expectException('Exception');
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessage('Unsupported Keccak Shake security level.');
         Keccak::shake('', 129, 256);
     }

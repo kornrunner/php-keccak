@@ -17,6 +17,11 @@
             "kornrunner\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "kornrunner\\": "test"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "~7",
         "satooshi/php-coveralls": "~2"
