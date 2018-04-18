@@ -11,7 +11,7 @@ matrix:
 
 install:
   - if [[ "$TRAVIS_PHP_VERSION" != "nightly" ]]; then phpenv config-rm xdebug.ini; fi
-  - travis_retry composer install --prefer-dist
+  - travis_retry composer update --prefer-dist -n
 
 script:
   - mkdir -p build/logs
