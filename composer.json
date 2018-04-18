@@ -10,11 +10,17 @@
         }
     ],
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.1.0",
+        "ext-mbstring": "*"
     },
     "autoload": {
         "psr-4": {
             "kornrunner\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "kornrunner\\": "test"
         }
     },
     "require-dev": {
