@@ -11,7 +11,7 @@ matrix:
     - php: nightly
 
 install:
-  - if [[ "$TRAVIS_PHP_VERSION" != "nightly" ]]; then phpenv config-rm xdebug.ini; fi
+  - phpenv config-rm xdebug.ini || true
   - travis_retry composer update --prefer-dist -n
 
 script:
