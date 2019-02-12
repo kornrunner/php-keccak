@@ -3,11 +3,11 @@ language: php
 php:
   - 7.2
   - 7.3
-  - nightly
+  - 7.4snapshot
 
 matrix:
   allow_failures:
-    - php: nightly
+    - php: 7.4snapshot
 
 install:
   - phpenv config-rm xdebug.ini || true
