@@ -308,16 +308,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.8.1",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8"
+                "reference": "e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
-                "reference": "3e01bdad3e18354c3dce54466b7fbe33a9f9f7f8",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72",
+                "reference": "e6828efaba2c9b79f4499dae1d66ef8bfa7b2b72",
                 "shasum": ""
             },
             "require": {
@@ -352,7 +352,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2018-06-11T23:09:50+00:00"
+            "time": "2019-04-07T13:18:21+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -1008,16 +1008,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.1.0",
+            "version": "8.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "37cfab19fdda1554f2830be83a566ade4e2ae098"
+                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/37cfab19fdda1554f2830be83a566ade4e2ae098",
-                "reference": "37cfab19fdda1554f2830be83a566ade4e2ae098",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e7450b51b6f5d29edcd645ff72b355ab0633ca35",
+                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-05T05:27:33+00:00"
+            "time": "2019-04-08T16:03:02+00:00"
         },
         {
             "name": "psr/http-message",
