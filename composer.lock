@@ -1008,16 +1008,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.1.2",
+            "version": "8.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35"
+                "reference": "2a676677982b484ee36b54961f570c02eabbe7e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e7450b51b6f5d29edcd645ff72b355ab0633ca35",
-                "reference": "e7450b51b6f5d29edcd645ff72b355ab0633ca35",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2a676677982b484ee36b54961f570c02eabbe7e1",
+                "reference": "2a676677982b484ee36b54961f570c02eabbe7e1",
                 "shasum": ""
             },
             "require": {
@@ -1086,7 +1086,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-08T16:03:02+00:00"
+            "time": "2019-04-19T15:52:00+00:00"
         },
         {
             "name": "psr/http-message",
@@ -1796,7 +1796,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.2.6",
+            "version": "v4.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -1859,7 +1859,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.2.6",
+            "version": "v4.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -1999,7 +1999,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.2.6",
+            "version": "v4.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2107,7 +2107,7 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v4.2.6",
+            "version": "v4.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -2157,7 +2157,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.2.6",
+            "version": "v4.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
