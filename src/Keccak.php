@@ -110,7 +110,7 @@ final class Keccak
 
         for ($in_t = 0; $inlen >= $rsiz; $inlen -= $rsiz, $in_t += $rsiz) {
             for ($i = 0; $i < $rsizw; $i++) {
-                $t = unpack('V*', mb_substr($in_raw, $i * 8 + $in_t, 8, self::ENCODING));
+                $t = unpack('V*', mb_substr($in_raw, intval($i * 8 + $in_t), 8, self::ENCODING));
 
                 $st[$i] = [
                     $st[$i][0] ^ $t[2],
@@ -121,11 +121,10 @@ final class Keccak
             self::keccakf64($st, self::KECCAK_ROUNDS);
         }
 
-        $temp = mb_substr($in_raw, $in_t, $inlen, self::ENCODING);
-        $temp = str_pad($temp, $rsiz, "\x0", STR_PAD_RIGHT);
-
-        $temp[$inlen] = chr($suffix);
-        $temp[$rsiz - 1] = chr(ord($temp[$rsiz - 1]) | 0x80);
+        $temp = mb_substr($in_raw, (int) $in_t, (int) $inlen, self::ENCODING);
+        $temp = str_pad($temp, (int) $rsiz, "\x0", STR_PAD_RIGHT);
+        $temp = substr_replace($temp, chr($suffix), $inlen, 1);
+        $temp = substr_replace($temp, chr(ord($temp[$rsiz - 1]) | 0x80), $rsiz - 1, 1);
 
         for ($i = 0; $i < $rsizw; $i++) {
             $t = unpack('V*', mb_substr($temp, $i * 8, 8, self::ENCODING));
@@ -248,7 +247,7 @@ final class Keccak
 
         for ($in_t = 0; $inlen >= $rsiz; $inlen -= $rsiz, $in_t += $rsiz) {
             for ($i = 0; $i < $rsizw; $i++) {
-                $t = unpack('v*', mb_substr($in_raw, $i * 8 + $in_t, 8, self::ENCODING));
+                $t = unpack('v*', mb_substr($in_raw, intval($i * 8 + $in_t), 8, self::ENCODING));
 
                 $st[$i] = [
                     $st[$i][0] ^ $t[4],
@@ -261,11 +260,10 @@ final class Keccak
             self::keccakf32($st, self::KECCAK_ROUNDS);
         }
 
-        $temp = mb_substr($in_raw, $in_t, $inlen, self::ENCODING);
-        $temp = str_pad($temp, $rsiz, "\x0", STR_PAD_RIGHT);
-
-        $temp[$inlen] = chr($suffix);
-        $temp[$rsiz - 1] = chr((int) $temp[$rsiz - 1] | 0x80);
+        $temp = mb_substr($in_raw, (int) $in_t, (int) $inlen, self::ENCODING);
+        $temp = str_pad($temp, (int) $rsiz, "\x0", STR_PAD_RIGHT);
+        $temp = substr_replace($temp, chr($suffix), $inlen, 1);
+        $temp = substr_replace($temp, chr((int) $temp[$rsiz - 1] | 0x80), $rsiz - 1, 1);
 
         for ($i = 0; $i < $rsizw; $i++) {
             $t = unpack('v*', mb_substr($temp, $i * 8, 8, self::ENCODING));
