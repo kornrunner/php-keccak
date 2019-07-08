@@ -124,7 +124,7 @@ final class Keccak
         $temp = mb_substr($in_raw, (int) $in_t, (int) $inlen, self::ENCODING);
         $temp = str_pad($temp, (int) $rsiz, "\x0", STR_PAD_RIGHT);
         $temp = substr_replace($temp, chr($suffix), $inlen, 1);
-        $temp = substr_replace($temp, chr(ord($temp[$rsiz - 1]) | 0x80), $rsiz - 1, 1);
+        $temp = substr_replace($temp, chr(ord($temp[intval($rsiz - 1)]) | 0x80), $rsiz - 1, 1);
 
         for ($i = 0; $i < $rsizw; $i++) {
             $t = unpack('V*', mb_substr($temp, $i * 8, 8, self::ENCODING));
@@ -141,7 +141,7 @@ final class Keccak
         for ($i = 0; $i < 25; $i++) {
             $out .= $t = pack('V*', $st[$i][1], $st[$i][0]);
         }
-        $r = mb_substr($out, 0, $outputlength / 8, self::ENCODING);
+        $r = mb_substr($out, 0, intval($outputlength / 8), self::ENCODING);
 
         return $raw_output ? $r : bin2hex($r);
     }
@@ -263,7 +263,7 @@ final class Keccak
         $temp = mb_substr($in_raw, (int) $in_t, (int) $inlen, self::ENCODING);
         $temp = str_pad($temp, (int) $rsiz, "\x0", STR_PAD_RIGHT);
         $temp = substr_replace($temp, chr($suffix), $inlen, 1);
-        $temp = substr_replace($temp, chr((int) $temp[$rsiz - 1] | 0x80), $rsiz - 1, 1);
+        $temp = substr_replace($temp, chr((int) $temp[intval($rsiz - 1)] | 0x80), $rsiz - 1, 1);
 
         for ($i = 0; $i < $rsizw; $i++) {
             $t = unpack('v*', mb_substr($temp, $i * 8, 8, self::ENCODING));
@@ -282,7 +282,7 @@ final class Keccak
         for ($i = 0; $i < 25; $i++) {
             $out .= $t = pack('v*', $st[$i][3],$st[$i][2], $st[$i][1], $st[$i][0]);
         }
-        $r = mb_substr($out, 0, $outputlength / 8, self::ENCODING);
+        $r = mb_substr($out, 0, intval($outputlength / 8), self::ENCODING);
 
         return $raw_output ? $r: bin2hex($r);
     }
