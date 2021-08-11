@@ -1,4 +1,4 @@
-# php-keccak [![Build status](https://ci.appveyor.com/api/projects/status/48isd8g6gov29wba/branch/master?svg=true)](https://ci.appveyor.com/project/kornrunner/php-keccak/branch/master) [![Coverage Status](https://coveralls.io/repos/github/kornrunner/php-keccak/badge.svg?branch=master)](https://coveralls.io/github/kornrunner/php-keccak?branch=master) [![Latest Stable Version](https://poser.pugx.org/kornrunner/keccak/v/stable)](https://packagist.org/packages/kornrunner/keccak)
+# php-keccak [![Tests](https://github.com/kornrunner/php-keccak/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/kornrunner/php-keccak/actions/workflows/tests.yml) [![Coverage Status](https://coveralls.io/repos/github/kornrunner/php-keccak/badge.svg?branch=master)](https://coveralls.io/github/kornrunner/php-keccak?branch=master) [![Latest Stable Version](https://poser.pugx.org/kornrunner/keccak/v/stable)](https://packagist.org/packages/kornrunner/keccak)
 Pure PHP implementation of Keccak (SHA-3)
 
 ## Usage
