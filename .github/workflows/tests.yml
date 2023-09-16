@@ -39,7 +39,7 @@ jobs:
     steps:
       - name: Setup PHP
         id: setup-php
-        uses: cmb69/setup-php-sdk@v0.1
+        uses: cmb69/setup-php-sdk@v0.7
         with:
           version: ${{matrix.php-version}}
           arch: ${{matrix.arch}}
