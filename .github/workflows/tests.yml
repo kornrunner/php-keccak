@@ -17,11 +17,16 @@ jobs:
         with:
           fetch-depth: 1
 
-      - run: php${{ matrix.php-version }} -v
-      - run: php${{ matrix.php-version }} -m
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - run: php -v
+      - run: php -m
       - run: composer -V
       - run: composer install --no-progress
-      - run: php${{ matrix.php-version }} vendor/bin/phpunit
+      - run: php vendor/bin/phpunit
 
   windows:
     name: Test on Windows
