@@ -30,28 +30,21 @@ jobs:
 
   windows:
     name: Test on Windows
-    defaults:
-      run:
-        shell: cmd
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
         php-version: ['8.1', '8.2', '8.3', '8.4']
-        arch: [x64]
-        ts: [nts]
 
     steps:
-      - name: Setup PHP
-        id: setup-php
-        uses: cmb69/setup-php-sdk@v0.7
-        with:
-          version: ${{matrix.php-version}}
-          arch: ${{matrix.arch}}
-          ts: ${{matrix.ts}}
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
 
       - run: php -v
       - run: php -m
